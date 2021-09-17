@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from .models import Question,Choice,AddPlant,Posts,Comment,Profile,humidity
-from .serializers import QuestionSerializer,UserSerializer,ChoiceSerializer,AddPlantSerializer,humiditySerializer,PostsSerializer,CommentSerializer,ProfileSerializer
+from .models import Question,Choice,AddPlant,Posts,Comment,Profile,Notifications
+from .serializers import QuestionSerializer,UserSerializer,NotificationsSerializer,ChoiceSerializer,AddPlantSerializer,humiditySerializer,PostsSerializer,CommentSerializer,ProfileSerializer,nearbyDeviceSerializer
 from rest_framework import viewsets
 from django.shortcuts import render,get_object_or_404,redirect
 from django.http import HttpResponse,HttpResponseRedirect
@@ -14,16 +14,10 @@ from django.utils import timezone
 import datetime
 import bluetooth
 import serial
+import schedule
+import time
 
-nearby_device=bluetooth.discover_devices(lookup_names=True)
-s=bluetooth.BluetoothSocket(bluetooth.RFCOMM)
-port=1
-size=1048576
-add='00:19:07:34:FE:6E'
-s.connect((add,port))
 
-data=s.recv(size).decode("utf-8")
-print(data)
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 
@@ -72,21 +66,68 @@ class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
 
+class NotificationsViewSet(viewsets.ModelViewSet):
+    queryset = Notifications.objects.all()
+    serializer_class = NotificationsSerializer
+
+
+
+nearby_devices=bluetooth.discover_devices()
+devices_names=bluetooth.discover_devices(lookup_names=True)
 class nearbyBluetoothDevice:
-    def __init__(self,device):
-        self.device = device
+    def __init__(self,nearbyDevices,deviceNames):
+        self.nearbyDevices=nearbyDevices
+        self.deviceNames=deviceNames
 
+x=0
+y=0
 
-nearbyDevice= nearbyBluetoothDevice(device=data)
-n=AddPlant.objects.all()
+class nearbyDevicesViewSet(viewsets.ViewSet):
+    
+    def list(self,request):
+        serializer=nearbyDeviceSerializer(nearbyBluetoothDevice(nearbyDevices=nearby_devices[x],
+                                                                deviceNames=devices_names[y][1]))
+        return Response(serializer.data)
+    def create(self,request):
+        global x
+        global y
+        x=x+1
+        y=y+1
+        if (x >= len(nearby_devices)):
+            x=0        
+        if (y >= len(nearby_devices)):
+            y=0
+        serializer=nearbyDeviceSerializer(nearbyBluetoothDevice(nearbyDevices=nearby_devices[x],
+                                                                deviceNames=devices_names[y][1]))
+        return Response(serializer.data)
+
+class humidityStat:
+    def __init__(self,humidity):
+        self.humidity = humidity
+   
+
+s=bluetooth.BluetoothSocket(bluetooth.RFCOMM)
+port=1
+size=1024
 class humidityViewSet(viewsets.ViewSet):
+    def list(self,request):
+        serializer=nearbyDeviceSerializer(nearbyBluetoothDevice(nearbyDevices=nearby_devices,
+                                                                deviceNames=devices_names))
+        return Response(serializer.data)
 
-    def list(self, request):
-        serializer=humiditySerializer(nearbyDevice)
-        json = JSONRenderer().render(serializer.data)
-        return Response(json )
+    def retrieve(self,request,pk):
+        add=AddPlant.objects.values_list('device',flat=True).get(pk=pk)
+        s.connect((add,port))
+        data=s.recv(size).decode("utf-8")
+        serializer=humiditySerializer(humidityStat(humidity=data))
+        return Response(serializer.data)
 
 
+    def update(self,request,pk):
+        data=s.recv(size).decode("utf-8")
+        serializer=humiditySerializer(humidityStat(humidity=data))
+        return Response(serializer.data)
+   
 
 
 class ProfileViewSet(viewsets.ModelViewSet):

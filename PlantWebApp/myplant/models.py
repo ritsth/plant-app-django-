@@ -2,10 +2,12 @@ from django.db import models
 import datetime
 from django.utils import timezone
 from django.contrib.auth.models import User
-from bluetoothAdriuno.main import data1
 
-class humidity(models.Model):
-    data=models.CharField(max_length=200,default=data1)
+
+class Notifications(models.Model):
+    list=models.CharField(max_length=200)
+    def __str__(self):
+       return self.list
 
 class AddPlant(models.Model):
     name_text=models.CharField(max_length=200)
@@ -13,7 +15,7 @@ class AddPlant(models.Model):
     plant_img=models.ImageField(default="plant_img")
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True,editable=False,related_name='user_name2')
     pub_date = models.DateTimeField('Date published',default=timezone.now,editable=False)
-
+    device=models.CharField(max_length=200,default="no devices in range")
     def __str__(self):
           return self.type_text
  
@@ -27,6 +29,7 @@ class Posts(models.Model):
 
       def __str__(self):
           return self.status
+
 class Comment(models.Model):
     post=models.ForeignKey(Posts, on_delete=models.CASCADE, null=True,editable=True,related_name='related_post' )
     comment_text=models.CharField(max_length=1200)

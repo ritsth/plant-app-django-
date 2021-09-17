@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Question,Choice,AddPlant,Posts,Comment,Profile,humidity
+from .models import Question,Choice,AddPlant,Posts,Comment,Profile,Notifications
 from django.contrib.auth.admin import User
 from rest_framework.authtoken.views import Token
 import datetime
@@ -11,8 +11,21 @@ class QuestionSerializer(serializers.ModelSerializer):
         model = Question
         fields = '__all__'
 
+class NotificationsSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Notifications
+        fields = '__all__'
+
+
+
 class humiditySerializer(serializers.Serializer):
-      device = serializers.CharField()
+      humidity = serializers.CharField(default=0)
+
+
+class nearbyDeviceSerializer(serializers.Serializer):
+      nearbyDevices = serializers.CharField(default=0)
+      deviceNames= serializers.CharField()
     
 class ChoiceSerializer(serializers.ModelSerializer):
     question=serializers.CharField()
