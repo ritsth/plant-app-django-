@@ -23,7 +23,7 @@ class Posts(models.Model):
 
       user = models.ForeignKey(User, on_delete=models.CASCADE, null=True,editable=False,related_name='user_name3' )
       type= models.ForeignKey(AddPlant ,on_delete=models.CASCADE,related_name='type_name')
-      status=models.CharField(max_length=1200)
+      status=models.CharField(max_length=1200,default=" ")
       post_img=models.ImageField(default="post_img")
       pub_date = models.DateTimeField('Date published',default=timezone.now,editable=False)
 

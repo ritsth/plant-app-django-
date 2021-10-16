@@ -5,7 +5,6 @@
     "\\PlantWebApp\\myplant",
     "\\PlantWebApp\\myplant\\migrations",
     "\\PlantWebApp\\PlantWebApp",
-    "\\PlantWebApp\\static",
     "\\PlantWebApp\\static\\image"
   ],
   "SelectedNode": "\\PlantWebApp\\myplant\\views.py",

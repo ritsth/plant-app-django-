@@ -13,8 +13,6 @@ from rest_framework.views import APIView
 from django.utils import timezone
 import datetime
 import bluetooth
-import serial
-import schedule
 import time
 
 
@@ -45,15 +43,20 @@ class AddPlantViewSet(viewsets.ModelViewSet):
 class PostsLaterViewSet(viewsets.ModelViewSet):
     parser_classes = (MultiPartParser, FormParser,JSONParser)
     serializer_class= PostsSerializer
-    later=timezone.now()+datetime.timedelta(hours=6)-datetime.timedelta(days=2)
-    later_later=timezone.now()-datetime.timedelta(days=14)
+    later=timezone.now()+datetime.timedelta(hours=6)-datetime.timedelta(days=4)
+    later_later=timezone.now()-datetime.timedelta(days=50)
     queryset=Posts.objects.filter(pub_date__range=(later_later,later)).order_by('-pub_date')
 
 class PostsNowViewSet(viewsets.ModelViewSet):
     parser_classes = (MultiPartParser, FormParser,JSONParser)
     serializer_class=PostsSerializer
-    now=timezone.now()
-    later=timezone.now()-datetime.timedelta(days=2)
+    now=timezone.now()+datetime.timedelta(hours=6)
+    later=now-datetime.timedelta(days=5)
+    queryset=Posts.objects.all().filter(pub_date__range=(later,now)).order_by('-pub_date')
+
+class AllPostsViewSet(viewsets.ModelViewSet):
+    parser_classes = (MultiPartParser, FormParser,JSONParser)
+    serializer_class=PostsSerializer
     queryset=Posts.objects.all().order_by('-pub_date')
 
 
@@ -71,16 +74,14 @@ class NotificationsViewSet(viewsets.ModelViewSet):
     serializer_class = NotificationsSerializer
 
 
-
+x=0
+y=0
 nearby_devices=bluetooth.discover_devices()
 devices_names=bluetooth.discover_devices(lookup_names=True)
 class nearbyBluetoothDevice:
     def __init__(self,nearbyDevices,deviceNames):
         self.nearbyDevices=nearbyDevices
         self.deviceNames=deviceNames
-
-x=0
-y=0
 
 class nearbyDevicesViewSet(viewsets.ViewSet):
     

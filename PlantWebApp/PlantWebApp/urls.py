@@ -2,7 +2,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
-from myplant.views import QuestionViewSet,UserViewSet,ChoiceViewSet,NotificationsViewSet,AddPlantViewSet,humidityViewSet,PostsNowViewSet,PostsLaterViewSet,ProfileViewSet,CommentViewSet,nearbyDevicesViewSet
+from myplant.views import QuestionViewSet,UserViewSet,ChoiceViewSet,AllPostsViewSet,NotificationsViewSet,AddPlantViewSet,humidityViewSet,PostsNowViewSet,PostsLaterViewSet,ProfileViewSet,CommentViewSet,nearbyDevicesViewSet
 from rest_framework.routers import DefaultRouter
 from rest_framework.authtoken.views import obtain_auth_token
 from rest_framework_simplejwt.views import (
@@ -22,7 +22,7 @@ router.register('profile_photo', ProfileViewSet, basename='profile_photo')
 router.register('humidity', humidityViewSet, basename='humidity')
 router.register('Notifications', NotificationsViewSet, basename='Notifications')
 router.register('nearbyDevices', nearbyDevicesViewSet, basename='nearbyDevices')
-
+router.register('allPosts',AllPostsViewSet, basename='allPosts')
 
 
 urlpatterns = [
