@@ -3,10 +3,9 @@
     "",
     "\\PlantWebApp",
     "\\PlantWebApp\\myplant",
-    "\\PlantWebApp\\myplant\\migrations",
     "\\PlantWebApp\\PlantWebApp",
     "\\PlantWebApp\\static\\image"
   ],
-  "SelectedNode": "\\PlantWebApp\\myplant\\views.py",
+  "SelectedNode": "\\PlantWebApp\\myplant\\serializers.py",
   "PreviewInSolutionExplorer": false
 }
