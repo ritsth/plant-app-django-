@@ -5,6 +5,7 @@ release: python manage.py migrate --no-input
 web: gunicorn PlantWebApp.wsgi
 =======
 web: gunicorn PlantWebApp.wsgi
-web: python manage.py runserver 0.0.0.0:5000
+
+web: python PlantWebApp/manage.py runserver 0.0.0.0:$localhost
 web: bin/boot
 >>>>>>> 709f4f418717558ee45258a131f327d5367783da
