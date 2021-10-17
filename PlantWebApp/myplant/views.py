@@ -86,7 +86,7 @@ class nearbyBluetoothDevice:
 class nearbyDevicesViewSet(viewsets.ViewSet):
     
     def list(self,request):
-        #serializer=nearbyDeviceSerializer(nearbyBluetoothDevice(nearbyDevices=nearby_devices[x],
+        serializer=nearbyDeviceSerializer(nearbyBluetoothDevice(nearbyDevices=nearby_devices[x],
                                                                 deviceNames=devices_names[y][1]))
         return Response(serializer.data)
     def create(self,request):
@@ -98,7 +98,7 @@ class nearbyDevicesViewSet(viewsets.ViewSet):
             x=0        
         if (y >= len(nearby_devices)):
             y=0
-        #serializer=nearbyDeviceSerializer(nearbyBluetoothDevice(nearbyDevices=nearby_devices[x],
+        serializer=nearbyDeviceSerializer(nearbyBluetoothDevice(nearbyDevices=nearby_devices[x],
                                                                 deviceNames=devices_names[y][1]))
         return Response(serializer.data)
 
@@ -112,7 +112,7 @@ port=1
 size=1024
 class humidityViewSet(viewsets.ViewSet):
     def list(self,request):
-        #serializer=nearbyDeviceSerializer(nearbyBluetoothDevice(nearbyDevices=nearby_devices,
+        serializer=nearbyDeviceSerializer(nearbyBluetoothDevice(nearbyDevices=nearby_devices,
                                                                 deviceNames=devices_names))
         return Response(serializer.data)
 
