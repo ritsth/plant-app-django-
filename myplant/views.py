@@ -107,7 +107,7 @@ class humidityStat:
         self.humidity = humidity
    
 
-s=bluetooth.BluetoothSocket(bluetooth.RFCOMM)
+#s=bluetooth.BluetoothSocket(bluetooth.RFCOMM)
 port=1
 size=1024
 class humidityViewSet(viewsets.ViewSet):
