@@ -12,8 +12,8 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.views import APIView
 from django.utils import timezone
 import datetime
-import bluetooth
-import time
+#import bluetooth
+#import time
 
 
 from rest_framework.renderers import JSONRenderer
@@ -76,8 +76,8 @@ class NotificationsViewSet(viewsets.ModelViewSet):
 
 x=0
 y=0
-nearby_devices=bluetooth.discover_devices()
-devices_names=bluetooth.discover_devices(lookup_names=True)
+#nearby_devices=bluetooth.discover_devices()
+#devices_names=bluetooth.discover_devices(lookup_names=True)
 class nearbyBluetoothDevice:
     def __init__(self,nearbyDevices,deviceNames):
         self.nearbyDevices=nearbyDevices
@@ -86,7 +86,7 @@ class nearbyBluetoothDevice:
 class nearbyDevicesViewSet(viewsets.ViewSet):
     
     def list(self,request):
-        serializer=nearbyDeviceSerializer(nearbyBluetoothDevice(nearbyDevices=nearby_devices[x],
+        #serializer=nearbyDeviceSerializer(nearbyBluetoothDevice(nearbyDevices=nearby_devices[x],
                                                                 deviceNames=devices_names[y][1]))
         return Response(serializer.data)
     def create(self,request):
@@ -98,7 +98,7 @@ class nearbyDevicesViewSet(viewsets.ViewSet):
             x=0        
         if (y >= len(nearby_devices)):
             y=0
-        serializer=nearbyDeviceSerializer(nearbyBluetoothDevice(nearbyDevices=nearby_devices[x],
+        #serializer=nearbyDeviceSerializer(nearbyBluetoothDevice(nearbyDevices=nearby_devices[x],
                                                                 deviceNames=devices_names[y][1]))
         return Response(serializer.data)
 
@@ -112,14 +112,14 @@ port=1
 size=1024
 class humidityViewSet(viewsets.ViewSet):
     def list(self,request):
-        serializer=nearbyDeviceSerializer(nearbyBluetoothDevice(nearbyDevices=nearby_devices,
+        #serializer=nearbyDeviceSerializer(nearbyBluetoothDevice(nearbyDevices=nearby_devices,
                                                                 deviceNames=devices_names))
         return Response(serializer.data)
 
     def retrieve(self,request,pk):
         add=AddPlant.objects.values_list('device',flat=True).get(pk=pk)
-        s.connect((add,port))
-        data=s.recv(size).decode("utf-8")
+        #s.connect((add,port))
+        #data=s.recv(size).decode("utf-8")
         serializer=humiditySerializer(humidityStat(humidity=data))
         return Response(serializer.data)
 
