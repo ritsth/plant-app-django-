@@ -6,6 +6,6 @@ web: gunicorn PlantWebApp.wsgi
 =======
 web: gunicorn PlantWebApp.wsgi
 
-web: python plant-app-django/manage.py runserver 0.0.0.0:$localhost
+web: python manage.py runserver 0.0.0.0:$localhost
 web: bin/boot
 >>>>>>> 709f4f418717558ee45258a131f327d5367783da
