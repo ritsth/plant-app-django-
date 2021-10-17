@@ -6,4 +6,5 @@ web: gunicorn PlantWebApp.wsgi
 =======
 web: gunicorn PlantWebApp.wsgi
 web: python manage.py runserver 0.0.0.0:5000
+web: bin/boot
 >>>>>>> 709f4f418717558ee45258a131f327d5367783da
