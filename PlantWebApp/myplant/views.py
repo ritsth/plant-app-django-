@@ -12,8 +12,8 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.views import APIView
 from django.utils import timezone
 import datetime
-#import bluetooth
-#import time
+import bluetooth
+import time
 
 
 from rest_framework.renderers import JSONRenderer
@@ -76,8 +76,8 @@ class NotificationsViewSet(viewsets.ModelViewSet):
 
 x=0
 y=0
-#nearby_devices=bluetooth.discover_devices()
-#devices_names=bluetooth.discover_devices(lookup_names=True)
+nearby_devices=bluetooth.discover_devices()
+devices_names=bluetooth.discover_devices(lookup_names=True)
 class nearbyBluetoothDevice:
     def __init__(self,nearbyDevices,deviceNames):
         self.nearbyDevices=nearbyDevices
@@ -118,8 +118,8 @@ class humidityViewSet(viewsets.ViewSet):
 
     def retrieve(self,request,pk):
         add=AddPlant.objects.values_list('device',flat=True).get(pk=pk)
-        #s.connect((add,port))
-        #data=s.recv(size).decode("utf-8")
+        s.connect((add,port))
+        data=s.recv(size).decode("utf-8")
         serializer=humiditySerializer(humidityStat(humidity=data))
         return Response(serializer.data)
 
