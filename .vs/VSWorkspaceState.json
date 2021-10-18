@@ -1,11 +1,6 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\PlantWebApp",
-    "\\PlantWebApp\\myplant",
-    "\\PlantWebApp\\PlantWebApp",
-    "\\PlantWebApp\\static\\image"
+    ""
   ],
-  "SelectedNode": "\\PlantWebApp\\myplant\\serializers.py",
   "PreviewInSolutionExplorer": false
 }
